@@ -1,161 +1,331 @@
-package dao;
-import model.Jogo;
-import java.util.List;
-import java.util.ArrayList;
+=== TESTE MÍNIMO ===
+1. Testando imports...
+2. Criando objeto Jogo...
+? Jogo criado!
+3. Testando classe Arquivo...
+? Arquivo criado!
+4. Criando JogoDAO original...
+PS D:\periodo5\TP-AEDS3> javac -cp . dao/JogoDAO.java     
+PS D:\periodo5\TP-AEDS3> java -cp . teste.TestMinimo
+=== TESTE MÍNIMO ===
+1. Testando imports...
+2. Criando objeto Jogo...
+? Jogo criado!
+3. Testando classe Arquivo...
+? Arquivo criado!
+4. Criando JogoDAO original...
+  -> Inicio do construtor JogoDAO
+  -> Criando Arquivo...
+  -> Arquivo criado com sucesso!
+  -> Criando IndicePrecoJogo...
+  -> IndicePrecoJogo criado!
+  -> Iniciando carregamento do indice...
+    -> Chamando listarTodos()...
+      -> Inicio do listarTodos()
+        -> Tentando ler ID: 1 (tentativa 1)
+        -> Jogo encontrado: GTA
+        -> Tentando ler ID: 2 (tentativa 2)
+        -> Jogo ID 2 e null
+        -> Tentando ler ID: 3 (tentativa 3)
+        -> Jogo ID 3 e null
+        -> Tentando ler ID: 4 (tentativa 4)
+        -> Jogo ID 4 e null
+        -> Tentando ler ID: 5 (tentativa 5)
+        -> Jogo ID 5 e null
+        -> Tentando ler ID: 6 (tentativa 6)
+        -> Jogo ID 6 e null
+        -> Tentando ler ID: 7 (tentativa 7)
+        -> Jogo ID 7 e null
+        -> Tentando ler ID: 8 (tentativa 8)
+        -> Jogo ID 8 e null
+        -> Tentando ler ID: 9 (tentativa 9)
+        -> Jogo ID 9 e null
+        -> Tentando ler ID: 10 (tentativa 10)
+        -> Jogo ID 10 e null
+        -> Tentando ler ID: 11 (tentativa 11)
+        -> Jogo ID 11 e null
+        -> Tentando ler ID: 12 (tentativa 12)
+        -> Jogo ID 12 e null
+        -> Tentando ler ID: 13 (tentativa 13)
+        -> Jogo ID 13 e null
+        -> Tentando ler ID: 14 (tentativa 14)
+        -> Jogo ID 14 e null
+        -> Tentando ler ID: 15 (tentativa 15)
+        -> Jogo ID 15 e null
+        -> Tentando ler ID: 16 (tentativa 16)
+        -> Jogo ID 16 e null
+        -> Tentando ler ID: 17 (tentativa 17)
+        -> Jogo ID 17 e null
+        -> Tentando ler ID: 18 (tentativa 18)
+        -> Jogo ID 18 e null
+        -> Tentando ler ID: 19 (tentativa 19)
+        -> Jogo ID 19 e null
+        -> Tentando ler ID: 20 (tentativa 20)
+        -> Jogo ID 20 e null
+        -> Tentando ler ID: 21 (tentativa 21)
+        -> Jogo ID 21 e null
+        -> Tentando ler ID: 22 (tentativa 22)
+        -> Jogo ID 22 e null
+        -> Tentando ler ID: 23 (tentativa 23)
+        -> Jogo ID 23 e null
+        -> Tentando ler ID: 24 (tentativa 24)
+        -> Jogo ID 24 e null
+        -> Tentando ler ID: 25 (tentativa 25)
+        -> Jogo ID 25 e null
+        -> Tentando ler ID: 26 (tentativa 26)
+        -> Jogo ID 26 e null
+        -> Tentando ler ID: 27 (tentativa 27)
+        -> Jogo ID 27 e null
+        -> Tentando ler ID: 28 (tentativa 28)
+        -> Jogo ID 28 e null
+        -> Tentando ler ID: 29 (tentativa 29)
+        -> Jogo ID 29 e null
+        -> Tentando ler ID: 30 (tentativa 30)
+        -> Jogo ID 30 e null
+        -> Tentando ler ID: 31 (tentativa 31)
+        -> Jogo ID 31 e null
+        -> Tentando ler ID: 32 (tentativa 32)
+        -> Jogo ID 32 e null
+        -> Tentando ler ID: 33 (tentativa 33)
+        -> Jogo ID 33 e null
+        -> Tentando ler ID: 34 (tentativa 34)
+        -> Jogo ID 34 e null
+        -> Tentando ler ID: 35 (tentativa 35)
+        -> Jogo ID 35 e null
+        -> Tentando ler ID: 36 (tentativa 36)
+        -> Jogo ID 36 e null
+        -> Tentando ler ID: 37 (tentativa 37)
+        -> Jogo ID 37 e null
+        -> Tentando ler ID: 38 (tentativa 38)
+        -> Jogo ID 38 e null
+        -> Tentando ler ID: 39 (tentativa 39)
+        -> Jogo ID 39 e null
+        -> Tentando ler ID: 40 (tentativa 40)
+        -> Jogo ID 40 e null
+        -> Tentando ler ID: 41 (tentativa 41)
+        -> Jogo ID 41 e null
+        -> Tentando ler ID: 42 (tentativa 42)
+        -> Jogo ID 42 e null
+        -> Tentando ler ID: 43 (tentativa 43)
+        -> Jogo ID 43 e null
+        -> Tentando ler ID: 44 (tentativa 44)
+        -> Jogo ID 44 e null
+        -> Tentando ler ID: 45 (tentativa 45)
+        -> Jogo ID 45 e null
+        -> Tentando ler ID: 46 (tentativa 46)
+        -> Jogo ID 46 e null
+        -> Tentando ler ID: 47 (tentativa 47)
+        -> Jogo ID 47 e null
+        -> Tentando ler ID: 48 (tentativa 48)
+        -> Jogo ID 48 e null
+        -> Tentando ler ID: 49 (tentativa 49)
+        -> Jogo ID 49 e null
+        -> Tentando ler ID: 50 (tentativa 50)
+        -> Jogo ID 50 e null
+        -> Tentando ler ID: 51 (tentativa 51)
+        -> Jogo ID 51 e null
+        -> Tentando ler ID: 52 (tentativa 52)
+        -> Jogo ID 52 e null
+        -> Tentando ler ID: 53 (tentativa 53)
+        -> Jogo ID 53 e null
+        -> Tentando ler ID: 54 (tentativa 54)
+        -> Jogo ID 54 e null
+        -> Tentando ler ID: 55 (tentativa 55)
+        -> Jogo ID 55 e null
+        -> Tentando ler ID: 56 (tentativa 56)
+        -> Jogo ID 56 e null
+        -> Tentando ler ID: 57 (tentativa 57)
+        -> Jogo ID 57 e null
+        -> Tentando ler ID: 58 (tentativa 58)
+        -> Jogo ID 58 e null
+        -> Tentando ler ID: 59 (tentativa 59)
+        -> Jogo ID 59 e null
+        -> Tentando ler ID: 60 (tentativa 60)
+        -> Jogo ID 60 e null
+        -> Tentando ler ID: 61 (tentativa 61)
+        -> Jogo ID 61 e null
+        -> Tentando ler ID: 62 (tentativa 62)
+        -> Jogo ID 62 e null
+        -> Tentando ler ID: 63 (tentativa 63)
+        -> Jogo ID 63 e null
+        -> Tentando ler ID: 64 (tentativa 64)
+        -> Jogo ID 64 e null
+        -> Tentando ler ID: 65 (tentativa 65)
+        -> Jogo ID 65 e null
+        -> Tentando ler ID: 66 (tentativa 66)
+        -> Jogo ID 66 e null
+        -> Tentando ler ID: 67 (tentativa 67)
+        -> Jogo ID 67 e null
+        -> Tentando ler ID: 68 (tentativa 68)
+        -> Jogo ID 68 e null
+        -> Tentando ler ID: 69 (tentativa 69)
+        -> Jogo ID 69 e null
+        -> Tentando ler ID: 70 (tentativa 70)
+        -> Jogo ID 70 e null
+        -> Tentando ler ID: 71 (tentativa 71)
+        -> Jogo ID 71 e null
+        -> Tentando ler ID: 72 (tentativa 72)
+        -> Jogo ID 72 e null
+        -> Tentando ler ID: 73 (tentativa 73)
+        -> Jogo ID 73 e null
+        -> Tentando ler ID: 74 (tentativa 74)
+        -> Jogo ID 74 e null
+        -> Tentando ler ID: 75 (tentativa 75)
+        -> Jogo ID 75 e null
+        -> Tentando ler ID: 76 (tentativa 76)
+        -> Jogo ID 76 e null
+        -> Tentando ler ID: 77 (tentativa 77)
+        -> Jogo ID 77 e null
+        -> Tentando ler ID: 78 (tentativa 78)
+        -> Jogo ID 78 e null
+        -> Tentando ler ID: 79 (tentativa 79)
+        -> Jogo ID 79 e null
+        -> Tentando ler ID: 80 (tentativa 80)
+        -> Jogo ID 80 e null
+        -> Tentando ler ID: 81 (tentativa 81)
+        -> Jogo ID 81 e null
+        -> Tentando ler ID: 82 (tentativa 82)
+        -> Jogo ID 82 e null
+        -> Tentando ler ID: 83 (tentativa 83)
+        -> Jogo ID 83 e null
+        -> Tentando ler ID: 84 (tentativa 84)
+        -> Jogo ID 84 e null
+        -> Tentando ler ID: 85 (tentativa 85)
+        -> Jogo ID 85 e null
+        -> Tentando ler ID: 86 (tentativa 86)
+        -> Jogo ID 86 e null
+        -> Tentando ler ID: 87 (tentativa 87)
+        -> Jogo ID 87 e null
+        -> Tentando ler ID: 88 (tentativa 88)
+        -> Jogo ID 88 e null
+        -> Tentando ler ID: 89 (tentativa 89)
+        -> Jogo ID 89 e null
+        -> Tentando ler ID: 90 (tentativa 90)
+        -> Jogo ID 90 e null
+        -> Tentando ler ID: 91 (tentativa 91)
+        -> Jogo ID 91 e null
+        -> Tentando ler ID: 92 (tentativa 92)
+        -> Jogo ID 92 e null
+        -> Tentando ler ID: 93 (tentativa 93)
+        -> Jogo ID 93 e null
+        -> Tentando ler ID: 94 (tentativa 94)
+        -> Jogo ID 94 e null
+        -> Tentando ler ID: 95 (tentativa 95)
+        -> Jogo ID 95 e null
+        -> Tentando ler ID: 96 (tentativa 96)
+        -> Jogo ID 96 e null
+        -> Tentando ler ID: 97 (tentativa 97)
+        -> Jogo ID 97 e null
+        -> Tentando ler ID: 98 (tentativa 98)
+        -> Jogo ID 98 e null
+        -> Jogo ID 99 e null
+        -> Tentando ler ID: 100 (tentativa 100)
+        -> Jogo ID 100 e null
+      -> Fim do listarTodos(), encontrados: 1 jogos
+    -> listarTodos() retornou 1 jogos
+    -> Adicionando jogos ao indice...
+      -> Adicionando jogo 1: GTA
+    -> Todos os jogos adicionados ao indice
+  -> Indice carregado!
+  -> JogoDAO totalmente inicializado!
+? JogoDAO criado!
 
-public class JogoDAO {
-    private Arquivo<Jogo> arq;
-    private IndicePrecoJogo indicePreco; 
-    
-    public JogoDAO() throws Exception {
-        System.out.println("  -> Inicio do construtor JogoDAO");
-        
-        System.out.println("  -> Criando Arquivo...");
-        arq = new Arquivo<>("jogos", Jogo.class.getConstructor());
-        System.out.println("  -> Arquivo criado com sucesso!");
-        
-        System.out.println("  -> Criando IndicePrecoJogo...");
-        indicePreco = new IndicePrecoJogo();
-        System.out.println("  -> IndicePrecoJogo criado!");
-        
-        System.out.println("  -> Iniciando carregamento do indice...");
-        carregarIndicePreco();
-        System.out.println("  -> Indice carregado!");
-        
-        System.out.println("  -> JogoDAO totalmente inicializado!");
-    }
-    
-    private void carregarIndicePreco() {
-        try {
-            System.out.println("    -> Chamando listarTodos()...");
-            List<Jogo> jogos = listarTodos();
-            System.out.println("    -> listarTodos() retornou " + jogos.size() + " jogos");
-            
-            System.out.println("    -> Adicionando jogos ao indice...");
-            for (int i = 0; i < jogos.size(); i++) {
-                Jogo jogo = jogos.get(i);
-                System.out.println("      -> Adicionando jogo " + (i+1) + ": " + jogo.getNome());
-                indicePreco.adicionarJogo(jogo);
-            }
-            System.out.println("    -> Todos os jogos adicionados ao indice");
-            
-        } catch (Exception e) {
-            System.err.println("    -> ERRO em carregarIndicePreco: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    private List<Jogo> listarTodos() throws Exception {
-        System.out.println("      -> Inicio do listarTodos()");
-        List<Jogo> jogos = new ArrayList<Jogo>();
-        
-        int id = 1;
-        int tentativas = 0;
-        int maxTentativas = 100; // LIMITE para evitar loop infinito
-        
-        while (tentativas < maxTentativas) {
-            try {
-                System.out.println("        -> Tentando ler ID: " + id + " (tentativa " + (tentativas + 1) + ")");
-                Jogo jogo = arq.read(id);
-                
-                if (jogo != null) {
-                    System.out.println("        -> Jogo encontrado: " + jogo.getNome());
-                    jogos.add(jogo);
-                } else {
-                    System.out.println("        -> Jogo ID " + id + " e null");
-                }
-                
-                id++;
-                tentativas++;
-                
-            } catch (Exception e) {
-                System.out.println("        -> Excecao para ID " + id + ": " + e.getMessage());
-                tentativas++;
-                
-                // Se teve muitas exceções seguidas, para
-                if (tentativas > 10) {
-                    System.out.println("        -> Muitas excecoes, parando busca");
-                    break;
-                }
-                
-                id++;
-            }
-        }
-        
-        System.out.println("      -> Fim do listarTodos(), encontrados: " + jogos.size() + " jogos");
-        return jogos;
-    }
-    
-    // MÉTODOS ORIGINAIS
-    public Jogo buscar(int id) throws Exception {
-        return arq.read(id);
-    }
-    
-    public boolean incluir(Jogo j) throws Exception {
-        boolean sucesso = arq.create(j) > 0;
-        if (sucesso) {
-            indicePreco.adicionarJogo(j);
-        }
-        return sucesso;
-    }
-    
-    public boolean alterar(Jogo j) throws Exception {
-        Jogo jogoAntigo = buscar(j.getId());
-        if (jogoAntigo != null) {
-            indicePreco.removerJogo(jogoAntigo);
-        }
-        
-        boolean sucesso = arq.update(j);
-        if (sucesso) {
-            indicePreco.adicionarJogo(j);
-        }
-        return sucesso;
-    }
-    
-    public boolean excluir(int id) throws Exception {
-        Jogo jogo = buscar(id);
-        boolean sucesso = arq.delete(id);
-        if (sucesso && jogo != null) {
-            indicePreco.removerJogo(jogo);
-        }
-        return sucesso;
-    }
-    
-    // NOVOS MÉTODOS - Buscas por preço
-    public List<Jogo> buscarPorPreco(double preco) {
-        return indicePreco.buscarPorPreco(preco);
-    }
-    
-    public List<Jogo> buscarPorFaixaPreco(double precoMin, double precoMax) {
-        return indicePreco.buscarPorFaixaPreco(precoMin, precoMax);
-    }
-    
-    public List<Jogo> buscarJogosPromocao() {
-        return indicePreco.buscarJogosPromocao();
-    }
-    
-    public List<Jogo> buscarJogosPremium() {
-        return indicePreco.buscarJogosPremium();
-    }
-    
-    public List<Jogo> listarOrdenadosPorPreco() {
-        return indicePreco.listarOrdenadosPorPreco();
-    }
-    
-    public void exibirEstatisticasPreco() {
-        System.out.println("\n=== ESTATISTICAS DE PRECOS ===");
-        
-        List<Jogo> gratuitos = buscarPorPreco(0.0);
-        List<Jogo> baratos = buscarPorFaixaPreco(0.01, 29.99);
-        List<Jogo> medios = buscarPorFaixaPreco(30.0, 79.99);
-        List<Jogo> caros = buscarPorFaixaPreco(80.0, 149.99);
-        List<Jogo> premium = buscarJogosPremium();
-        
-        System.out.println("Gratuitos (R$ 0,00): " + gratuitos.size() + " jogos");
-        System.out.println("Baratos (R$ 0,01 - 29,99): " + baratos.size() + " jogos");
-        System.out.println("Medios (R$ 30,00 - 79,99): " + medios.size() + " jogos");
-        System.out.println("Caros (R$ 80,00 - 149,99): " + caros.size() + " jogos");
-        System.out.println("Premium (R$ 150,00+): " + premium.size() + " jogos");
-        System.out.println("===============================\n");
-    }
-}
+? TUDO FUNCIONOU!
+PS D:\periodo5\TP-AEDS3> java -cp .teste.TestSemInput
+Usage: java [options] <mainclass> [args...]
+           (to execute a class)
+   or  java [options] -jar <jarfile> [args...]
+           (to execute a jar file)
+   or  java [options] -m <module>[/<mainclass>] [args...]
+       java [options] --module <module>[/<mainclass>] [args...]
+           (to execute the main class in a module)
+   or  java [options] <sourcefile> [args]
+           (to execute a single source-file program)
+
+ Arguments following the main class, source file, -jar <jarfile>,
+ -m or --module <module>/<mainclass> are passed as the arguments to
+ main class.
+
+ where options include:
+
+    -cp <class search path of directories and zip/jar files>
+    -classpath <class search path of directories and zip/jar files>
+    --class-path <class search path of directories and zip/jar files>
+                  A ; separated list of directories, JAR archives,
+                  and ZIP archives to search for class files.
+    -p <module path>
+    --module-path <module path>...
+                  A ; separated list of directories, each directory
+                  is a directory of modules.
+    --upgrade-module-path <module path>...
+                  A ; separated list of directories, each directory
+                  is a directory of modules that replace upgradeable
+                  modules in the runtime image
+    --add-modules <module name>[,<module name>...]
+                  root modules to resolve in addition to the initial module.
+                  <module name> can also be ALL-DEFAULT, ALL-SYSTEM,
+                  ALL-MODULE-PATH.
+    --enable-native-access <module name>[,<module name>...]
+                  modules that are permitted to perform restricted native operations.
+                  <module name> can also be ALL-UNNAMED.
+    --list-modules
+                  list observable modules and exit
+    -d <module name>
+    --describe-module <module name>
+                  describe a module and exit
+    --dry-run     create VM and load main class but do not execute main method.
+                  The --dry-run option may be useful for validating the
+                  command-line options such as the module system configuration.
+    --validate-modules
+                  validate all modules and exit
+                  The --validate-modules option may be useful for finding
+                  conflicts and other errors with modules on the module path.
+    -D<name>=<value>
+                  set a system property
+    -verbose:[class|module|gc|jni]
+                  enable verbose output for the given subsystem
+    -version      print product version to the error stream and exit
+    --version     print product version to the output stream and exit
+    -showversion  print product version to the error stream and continue
+    --show-version
+                  print product version to the output stream and continue
+    --show-module-resolution
+                  show module resolution output during startup
+    -? -h -help
+                  print this help message to the error stream
+    --help        print this help message to the output stream
+    -X            print help on extra options to the error stream
+    --help-extra  print help on extra options to the output stream
+    -ea[:<packagename>...|:<classname>]
+    -enableassertions[:<packagename>...|:<classname>]
+                  enable assertions with specified granularity
+    -da[:<packagename>...|:<classname>]
+    -disableassertions[:<packagename>...|:<classname>]
+                  disable assertions with specified granularity
+    -esa | -enablesystemassertions
+                  enable system assertions
+    -dsa | -disablesystemassertions
+                  disable system assertions
+    -agentlib:<libname>[=<options>]
+                  load native agent library <libname>, e.g. -agentlib:jdwp
+                  see also -agentlib:jdwp=help
+    -agentpath:<pathname>[=<options>]
+                  load native agent library by full pathname
+    -javaagent:<jarpath>[=<options>]
+                  load Java programming language agent, see java.lang.instrument
+    -splash:<imagepath>
+                  show splash screen with specified image
+                  HiDPI scaled images are automatically supported and used
+                  if available. The unscaled image filename, e.g. image.ext,
+                  should always be passed as the argument to the -splash option.
+                  The most appropriate scaled image provided will be picked up
+                  automatically.
+                  See the SplashScreen API documentation for more information
+    @argument files
+                  one or more argument files containing options
+    -disable-@files
+                  prevent further argument file expansion
+    --enable-preview
+                  allow classes to depend on preview features of this release
+To specify an argument for a long option, you can use --<name>=<value> or
+--<name> <value>.
