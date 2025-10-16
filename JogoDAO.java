@@ -5,84 +5,49 @@ import java.util.ArrayList;
 
 public class JogoDAO {
     private Arquivo<Jogo> arq;
-    private IndicePrecoJogo indicePreco; 
+    private IndicePrecoJogo indicePreco;
     
     public JogoDAO() throws Exception {
-        System.out.println("  -> Inicio do construtor JogoDAO");
-        
-        System.out.println("  -> Criando Arquivo...");
         arq = new Arquivo<>("jogos", Jogo.class.getConstructor());
-        System.out.println("  -> Arquivo criado com sucesso!");
-        
-        System.out.println("  -> Criando IndicePrecoJogo...");
         indicePreco = new IndicePrecoJogo();
-        System.out.println("  -> IndicePrecoJogo criado!");
-        
-        System.out.println("  -> Iniciando carregamento do indice...");
         carregarIndicePreco();
-        System.out.println("  -> Indice carregado!");
-        
-        System.out.println("  -> JogoDAO totalmente inicializado!");
     }
     
     private void carregarIndicePreco() {
         try {
-            System.out.println("    -> Chamando listarTodos()...");
             List<Jogo> jogos = listarTodos();
-            System.out.println("    -> listarTodos() retornou " + jogos.size() + " jogos");
-            
-            System.out.println("    -> Adicionando jogos ao indice...");
-            for (int i = 0; i < jogos.size(); i++) {
-                Jogo jogo = jogos.get(i);
-                System.out.println("      -> Adicionando jogo " + (i+1) + ": " + jogo.getNome());
+            for (Jogo jogo : jogos) {
                 indicePreco.adicionarJogo(jogo);
             }
-            System.out.println("    -> Todos os jogos adicionados ao indice");
-            
+            System.out.println("Indice de precos carregado com " + jogos.size() + " jogos");
         } catch (Exception e) {
-            System.err.println("    -> ERRO em carregarIndicePreco: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Erro ao carregar indice de precos: " + e.getMessage());
         }
     }
     
     private List<Jogo> listarTodos() throws Exception {
-        System.out.println("      -> Inicio do listarTodos()");
         List<Jogo> jogos = new ArrayList<Jogo>();
         
         int id = 1;
-        int tentativas = 0;
-        int maxTentativas = 100; // LIMITE para evitar loop infinito
+        int tentativasConsecutivasFalhas = 0;
+        int maxFalhasConsecutivas = 10;
         
-        while (tentativas < maxTentativas) {
+        while (tentativasConsecutivasFalhas < maxFalhasConsecutivas) {
             try {
-                System.out.println("        -> Tentando ler ID: " + id + " (tentativa " + (tentativas + 1) + ")");
                 Jogo jogo = arq.read(id);
-                
                 if (jogo != null) {
-                    System.out.println("        -> Jogo encontrado: " + jogo.getNome());
                     jogos.add(jogo);
+                    tentativasConsecutivasFalhas = 0; // Reset contador
                 } else {
-                    System.out.println("        -> Jogo ID " + id + " e null");
+                    tentativasConsecutivasFalhas++;
                 }
-                
                 id++;
-                tentativas++;
-                
             } catch (Exception e) {
-                System.out.println("        -> Excecao para ID " + id + ": " + e.getMessage());
-                tentativas++;
-                
-                // Se teve muitas exceções seguidas, para
-                if (tentativas > 10) {
-                    System.out.println("        -> Muitas excecoes, parando busca");
-                    break;
-                }
-                
+                tentativasConsecutivasFalhas++;
                 id++;
             }
         }
         
-        System.out.println("      -> Fim do listarTodos(), encontrados: " + jogos.size() + " jogos");
         return jogos;
     }
     
@@ -121,7 +86,7 @@ public class JogoDAO {
         return sucesso;
     }
     
-    // NOVOS MÉTODOS - Buscas por preço
+    // NOVOS MÉTODOS - Buscas por preço usando Árvore B+
     public List<Jogo> buscarPorPreco(double preco) {
         return indicePreco.buscarPorPreco(preco);
     }
