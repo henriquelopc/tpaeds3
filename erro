@@ -1,0 +1,472 @@
+PS D:\periodo5\TP-AEDS3> javac -cp dao/*.java teste/*.java
+dao\ArvoreBMaisPreco.java:3: error: package model does not exist
+import model.Jogo;
+            ^     
+dao\ArvoreBMaisPreco.java:19: error: cannot find symbol
+    public void inserirJogo(Jogo jogo) {
+                            ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:23: error: cannot find symbol
+    private void inserir(double preco, Jogo jogo) {    
+                                       ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:32: error: cannot find symbol
+    public List<Jogo> buscarPorPreco(double preco) {
+                ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:37: error: cannot find symbol
+    public List<Jogo> buscarPorFaixaPreco(double precoMin, double precoMax) {
+                ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:57: error: cannot find symbol
+    public List<Jogo> buscarMaisBaratosQue(double precoMax) {
+                ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:61: error: cannot find symbol
+    public List<Jogo> buscarMaisCarosQue(double precoMin) {
+                ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:65: error: cannot find symbol
+    public List<Jogo> listarTodosOrdenadosPorPreco() {
+                ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:241: error: cannot find symbol
+    private List<List<Jogo>> valores;
+                      ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:258: error: cannot find symbol
+    public void inserir(double preco, Jogo jogo, int ordem) {
+                                      ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:281: error: cannot find symbol
+    public List<Jogo> buscarJogosPorPreco(double preco) {
+                ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:290: error: cannot find symbol
+    public List<List<Jogo>> getValores() { return valores; }
+                     ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:200: error: cannot find symbol
+    public abstract void inserir(double preco, Jogo jogo, int ordem);
+                                               ^
+  symbol:   class Jogo
+  location: class NoB
+dao\ArvoreBMaisPreco.java:217: error: cannot find symbol
+    public void inserir(double preco, Jogo jogo, int ordem) {
+                                      ^
+  symbol:   class Jogo
+  location: class NoInterno
+dao\BibliotecaDAO.java:3: error: package model does not exist
+import model.Biblioteca;
+            ^
+dao\BibliotecaDAO.java:5: error: package model does not exist
+import model.Cliente;
+            ^
+dao\BibliotecaDAO.java:8: error: cannot find symbol
+    private Arquivo<Biblioteca> arq;
+            ^
+  symbol:   class Arquivo
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:8: error: cannot find symbol
+    private Arquivo<Biblioteca> arq;
+                    ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:14: error: cannot find symbol
+    public Biblioteca buscar(int id) throws Exception {
+           ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:18: error: cannot find symbol
+    public boolean incluir(Biblioteca b) throws Exception {
+                           ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:22: error: cannot find symbol
+    public boolean alterar(Biblioteca b) throws Exception {
+                           ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:26: error: cannot find symbol
+    public boolean incluirComValidacao(Biblioteca b) throws Exception {
+                                       ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:38: error: cannot find symbol
+    public boolean alterarComValidacao(Biblioteca b) throws Exception {
+                                       ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\ClienteDAO.java:3: error: package model does not exist
+import model.Cliente;
+            ^
+dao\ClienteDAO.java:8: error: cannot find symbol
+    private Arquivo<Cliente> arqClientes;
+            ^
+  symbol:   class Arquivo
+  location: class ClienteDAO
+dao\ClienteDAO.java:8: error: cannot find symbol
+    private Arquivo<Cliente> arqClientes;
+                    ^
+  symbol:   class Cliente
+  location: class ClienteDAO
+dao\ClienteDAO.java:14: error: cannot find symbol
+    public Cliente buscarCliente(int id) throws Exception {
+           ^
+  symbol:   class Cliente
+  location: class ClienteDAO
+dao\ClienteDAO.java:18: error: cannot find symbol
+    public boolean incluirCliente(Cliente cliente) throws Exception {
+                                  ^
+  symbol:   class Cliente
+  location: class ClienteDAO
+dao\ClienteDAO.java:22: error: cannot find symbol
+    public boolean alterarCliente(Cliente cliente) throws Exception {
+                                  ^
+  symbol:   class Cliente
+  location: class ClienteDAO
+dao\CompraDAO.java:3: error: package model does not exist
+import model.Compra;
+            ^
+dao\CompraDAO.java:5: error: package model does not exist
+import model.Cliente;
+            ^
+dao\CompraDAO.java:8: error: cannot find symbol
+    private Arquivo<Compra> arq;
+            ^
+  symbol:   class Arquivo
+  location: class CompraDAO
+dao\CompraDAO.java:8: error: cannot find symbol
+    private Arquivo<Compra> arq;
+                    ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\CompraDAO.java:14: error: cannot find symbol
+    public Compra buscar(int id) throws Exception { return arq.read(id); }
+           ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\CompraDAO.java:15: error: cannot find symbol
+    public boolean incluir(Compra c) throws Exception { return arq.create(c) > 0; }
+                           ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\CompraDAO.java:16: error: cannot find symbol
+    public boolean alterar(Compra c) throws Exception { return arq.update(c); }
+                           ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\CompraDAO.java:18: error: cannot find symbol
+    public boolean incluirComValidacao(Compra c) throws Exception {
+                                       ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\CompraDAO.java:30: error: cannot find symbol
+    public boolean alterarComValidacao(Compra c) throws Exception {
+                                       ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\IndicePrecoJogo.java:3: error: package model does not exist
+import model.Jogo;
+            ^
+dao\IndicePrecoJogo.java:13: error: cannot find symbol
+    public void adicionarJogo(Jogo jogo) {
+                              ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\IndicePrecoJogo.java:17: error: cannot find symbol
+    public void removerJogo(Jogo jogo) {
+                            ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\IndicePrecoJogo.java:21: error: cannot find symbol
+    public List<Jogo> buscarPorPreco(double preco) {
+                ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\IndicePrecoJogo.java:25: error: cannot find symbol
+    public List<Jogo> buscarPorFaixaPreco(double precoMin, double precoMax) {
+                ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\IndicePrecoJogo.java:29: error: cannot find symbol
+    public List<Jogo> buscarJogosPromocao() {
+                ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\IndicePrecoJogo.java:33: error: cannot find symbol
+    public List<Jogo> buscarJogosPremium() {
+                ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\IndicePrecoJogo.java:37: error: cannot find symbol
+    public List<Jogo> listarOrdenadosPorPreco() {
+                ^
+  symbol:   class Jogo
+  location: class IndicePrecoJogo
+dao\JogoDAO.java:2: error: package model does not exist
+import model.Jogo;
+            ^
+dao\JogoDAO.java:7: error: cannot find symbol
+    private Arquivo<Jogo> arq;
+            ^
+  symbol:   class Arquivo
+  location: class JogoDAO
+dao\JogoDAO.java:7: error: cannot find symbol
+    private Arquivo<Jogo> arq;
+                    ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:17: error: cannot find symbol
+    public Jogo buscar(int id) throws Exception {
+           ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:21: error: cannot find symbol
+    public boolean incluir(Jogo j) throws Exception {
+                           ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:29: error: cannot find symbol
+    public boolean alterar(Jogo j) throws Exception {
+                           ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:66: error: cannot find symbol
+    private List<Jogo> listarTodos() throws Exception {
+                 ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:87: error: cannot find symbol
+    public List<Jogo> buscarPorPreco(double preco) {
+                ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:91: error: cannot find symbol
+    public List<Jogo> buscarPorFaixaPreco(double precoMin, double precoMax) {
+                ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:95: error: cannot find symbol
+    public List<Jogo> buscarJogosPromocao() {
+                ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:99: error: cannot find symbol
+    public List<Jogo> buscarJogosPremium() {
+                ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:103: error: cannot find symbol
+    public List<Jogo> listarOrdenadosPorPreco() {
+                ^
+  symbol:   class Jogo
+  location: class JogoDAO
+teste\SeedData.java:4: error: package model does not exist
+import model.Cliente;
+            ^
+teste\TestAlterar.java:4: error: package model does not exist
+import model.Cliente;
+            ^
+teste\TestBiblioteca.java:4: error: package model does not exist
+import model.Biblioteca;
+            ^
+teste\TestBuscar.java:4: error: package model does not exist
+import model.Cliente;
+            ^
+teste\TestBuscarPreco.java:4: error: package model does not exist
+import model.Jogo;
+            ^
+teste\TestBuscarPreco.java:5: error: package util does not exist
+import util.OutputFormatter;
+           ^
+teste\TestBuscarPreco.java:79: error: cannot find symbol
+    private static void exibirResultados(String titulo, List<Jogo> jogos) {
+                                                             ^
+  symbol:   class Jogo
+  location: class TestBuscarPreco
+teste\TestCompra.java:4: error: package model does not exist
+import model.Compra;
+            ^
+teste\TestJogo.java:4: error: package model does not exist
+import model.Jogo;
+            ^
+dao\ArvoreBMaisPreco.java:38: error: cannot find symbol
+        List<Jogo> resultado = new ArrayList<Jogo>();
+             ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:38: error: cannot find symbol
+        List<Jogo> resultado = new ArrayList<Jogo>();
+                                             ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:66: error: cannot find symbol
+        List<Jogo> resultado = new ArrayList<Jogo>();
+             ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:66: error: cannot find symbol
+        List<Jogo> resultado = new ArrayList<Jogo>();
+                                             ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:70: error: cannot find symbol
+            for (List<Jogo> jogosComMesmoPreco : folhaAtual.getValores()) {
+                      ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:81: error: cannot find symbol
+        List<Jogo> jogos = folha.buscarJogosPorPreco(preco);
+             ^
+  symbol:   class Jogo
+  location: class ArvoreBMaisPreco
+dao\ArvoreBMaisPreco.java:247: error: cannot find symbol
+        this.valores = new ArrayList<List<Jogo>>();
+                                          ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:267: error: cannot find symbol
+            List<Jogo> listaJogos = new ArrayList<Jogo>();
+                 ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:267: error: cannot find symbol
+            List<Jogo> listaJogos = new ArrayList<Jogo>();
+                                                  ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:284: error: cannot find symbol
+            return new ArrayList<Jogo>(valores.get(pos));
+                                 ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\ArvoreBMaisPreco.java:286: error: cannot find symbol
+        return new ArrayList<Jogo>();
+                             ^
+  symbol:   class Jogo
+  location: class NoFolha
+dao\BibliotecaDAO.java:11: error: cannot find symbol
+        arq = new Arquivo<>("bibliotecas", Biblioteca.class.getConstructor());
+                  ^
+  symbol:   class Arquivo
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:11: error: cannot find symbol
+        arq = new Arquivo<>("bibliotecas", Biblioteca.class.getConstructor());
+                                           ^
+  symbol:   class Biblioteca
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:29: error: cannot find symbol
+            Cliente cli = cd.buscarCliente(b.getClienteId());
+            ^
+  symbol:   class Cliente
+  location: class BibliotecaDAO
+dao\BibliotecaDAO.java:41: error: cannot find symbol
+            Cliente cli = cd.buscarCliente(b.getClienteId());
+            ^
+  symbol:   class Cliente
+  location: class BibliotecaDAO
+dao\ClienteDAO.java:11: error: cannot find symbol
+        arqClientes = new Arquivo<>("clientes", Cliente.class.getConstructor());
+                          ^
+  symbol:   class Arquivo
+  location: class ClienteDAO
+dao\ClienteDAO.java:11: error: cannot find symbol
+        arqClientes = new Arquivo<>("clientes", Cliente.class.getConstructor());
+                                                ^
+  symbol:   class Cliente
+  location: class ClienteDAO
+dao\CompraDAO.java:11: error: cannot find symbol
+        arq = new Arquivo<>("compras", Compra.class.getConstructor());
+                  ^
+  symbol:   class Arquivo
+  location: class CompraDAO
+dao\CompraDAO.java:11: error: cannot find symbol
+        arq = new Arquivo<>("compras", Compra.class.getConstructor());
+                                       ^
+  symbol:   class Compra
+  location: class CompraDAO
+dao\CompraDAO.java:21: error: cannot find symbol
+            Cliente cli = cd.buscarCliente(c.getClienteId());
+            ^
+  symbol:   class Cliente
+  location: class CompraDAO
+dao\CompraDAO.java:33: error: cannot find symbol
+            Cliente cli = cd.buscarCliente(c.getClienteId());
+            ^
+  symbol:   class Cliente
+  location: class CompraDAO
+dao\JogoDAO.java:11: error: cannot find symbol
+        arq = new Arquivo<>("jogos", Jogo.class.getConstructor());
+                  ^
+  symbol:   class Arquivo
+  location: class JogoDAO
+dao\JogoDAO.java:11: error: cannot find symbol
+        arq = new Arquivo<>("jogos", Jogo.class.getConstructor());
+                                     ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:31: error: cannot find symbol
+        Jogo jogoAntigo = buscar(j.getId());
+        ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:44: error: cannot find symbol
+        Jogo jogo = buscar(id);
+        ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:55: error: cannot find symbol
+            List<Jogo> jogos = listarTodos();
+                 ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:56: error: cannot find symbol
+            for (Jogo jogo : jogos) {
+                 ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:67: error: cannot find symbol
+        List<Jogo> jogos = new ArrayList<>();
+             ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:73: error: cannot find symbol
+                Jogo jogo = arq.read(id);
+                ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:110: error: cannot find symbol
+        List<Jogo> gratuitos = buscarPorPreco(0.0);
+             ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:111: error: cannot find symbol
+        List<Jogo> baratos = buscarPorFaixaPreco(0.01, 29.99);
+             ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:112: error: cannot find symbol
+        List<Jogo> medios = buscarPorFaixaPreco(30.0, 79.99);
+             ^
+  symbol:   class Jogo
+  location: class JogoDAO
+dao\JogoDAO.java:113: error: cannot find symbol
+        List<Jogo> caros = buscarPorFaixaPreco(80.0, 149.99);
+             ^
+  symbol:   class Jogo
+  location: class JogoDAO
+100 errors
+only showing the first 100 errors, of 125 total; use -Xmaxerrs if you would like to see more
+PS D:\periodo5\TP-AEDS3> 
