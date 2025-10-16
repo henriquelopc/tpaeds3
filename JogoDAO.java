@@ -1,58 +1,20 @@
-package dao;
-import model.Jogo;
-import java.util.List;
-import java.util.ArrayList;
-
+// Adicionar no JogoDAO.java
 public class JogoDAO {
-    private Arquivo<Jogo> arq;
-    private IndicePrecoJogo indicePreco;
+    private Arquivo<Jogo> arquivo;
+    private IndicePrecoJogo indicePreco; // NOVA LINHA
     
     public JogoDAO() throws Exception {
-        arq = new Arquivo<>("jogos", Jogo.class.getConstructor());
-        indicePreco = new IndicePrecoJogo();
-        carregarIndicePreco();
-    }
-    
-    // MÉTODOS ORIGINAIS (mantidos iguais)
-    public Jogo buscar(int id) throws Exception {
-        return arq.read(id);
-    }
-    
-    public boolean incluir(Jogo j) throws Exception {
-        boolean sucesso = arq.create(j) > 0;
-        if (sucesso) {
-            indicePreco.adicionarJogo(j);
-        }
-        return sucesso;
-    }
-    
-    public boolean alterar(Jogo j) throws Exception {
-        // Remover versão antiga do índice
-        Jogo jogoAntigo = buscar(j.getId());
-        if (jogoAntigo != null) {
-            indicePreco.removerJogo(jogoAntigo);
-        }
+        arquivo = new Arquivo<>("Jogo", Jogo.class.getConstructor());
+        indicePreco = new IndicePrecoJogo(); // NOVA LINHA
         
-        boolean sucesso = arq.update(j);
-        if (sucesso) {
-            indicePreco.adicionarJogo(j); // Adicionar versão atualizada
-        }
-        return sucesso;
+        // Carregar jogos existentes no índice
+        carregarIndicePreco(); // NOVA LINHA
     }
     
-    public boolean excluir(int id) throws Exception {
-        Jogo jogo = buscar(id);
-        boolean sucesso = arq.delete(id);
-        if (sucesso && jogo != null) {
-            indicePreco.removerJogo(jogo);
-        }
-        return sucesso;
-    }
-    
-    // Carregar todos os jogos para o índice
+    // NOVO MÉTODO - Carregar índice na inicialização
     private void carregarIndicePreco() {
         try {
-            List<Jogo> jogos = listarTodos();
+            List<Jogo> jogos = listar(); // Usa método existente
             for (Jogo jogo : jogos) {
                 indicePreco.adicionarJogo(jogo);
             }
@@ -62,28 +24,43 @@ public class JogoDAO {
         }
     }
     
-    // Método auxiliar para listar todos os jogos
-    private List<Jogo> listarTodos() throws Exception {
-        List<Jogo> jogos = new ArrayList<>();
-        
-        // Assumindo que o arquivo tem IDs sequenciais, começando de 1 VERIFY
-        int id = 1;
-        while (true) {
-            try {
-                Jogo jogo = arq.read(id);
-                if (jogo != null) {
-                    jogos.add(jogo);
-                }
-                id++;
-            } catch (Exception e) {
-                // Não encontrou mais jogos, termina a busca
-                break;
-            }
+    // Modificar métodos existentes para manter índice atualizado
+    @Override
+    public int create(Jogo jogo) throws Exception {
+        int id = super.create(jogo);
+        if (id > 0) {
+            jogo.setId(id);
+            indicePreco.adicionarJogo(jogo); // NOVA LINHA
         }
-        return jogos;
+        return id;
     }
     
-    //Buscas por preço usando Árvore B+
+    @Override
+    public boolean update(Jogo jogo) throws Exception {
+        // Remover do índice antes de atualizar
+        Jogo jogoAntigo = read(jogo.getId());
+        if (jogoAntigo != null) {
+            indicePreco.removerJogo(jogoAntigo);
+        }
+        
+        boolean sucesso = super.update(jogo);
+        if (sucesso) {
+            indicePreco.adicionarJogo(jogo); // Adicionar versão atualizada
+        }
+        return sucesso;
+    }
+    
+    @Override
+    public boolean delete(int id) throws Exception {
+        Jogo jogo = read(id);
+        boolean sucesso = super.delete(id);
+        if (sucesso && jogo != null) {
+            indicePreco.removerJogo(jogo); // NOVA LINHA
+        }
+        return sucesso;
+    }
+    
+    // NOVOS MÉTODOS - Buscas por preço usando Árvore B+
     public List<Jogo> buscarPorPreco(double preco) {
         return indicePreco.buscarPorPreco(preco);
     }
@@ -104,8 +81,9 @@ public class JogoDAO {
         return indicePreco.listarOrdenadosPorPreco();
     }
     
-    public void exibirEstatisticasPreco() {
-        System.out.println("\n=== ESTATÍSTICAS DE PREÇOS ===");
+    // NOVO MÉTODO - Relatório por faixas de preço
+    public void relatorioPorPreco() {
+        System.out.println("\n=== RELATÓRIO DE JOGOS POR PREÇO ===");
         
         List<Jogo> gratuitos = buscarPorPreco(0.0);
         List<Jogo> baratos = buscarPorFaixaPreco(0.01, 29.99);
@@ -118,6 +96,6 @@ public class JogoDAO {
         System.out.println("Médios (R$ 30,00 - 79,99): " + medios.size() + " jogos");
         System.out.println("Caros (R$ 80,00 - 149,99): " + caros.size() + " jogos");
         System.out.println("Premium (R$ 150,00+): " + premium.size() + " jogos");
-        System.out.println("===============================\n");
+        System.out.println("=====================================\n");
     }
 }
