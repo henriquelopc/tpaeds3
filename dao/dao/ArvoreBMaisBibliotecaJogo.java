@@ -1,50 +1,54 @@
 package dao;
 
-import model.BibliotecaJogo;
+import model.Biblioteca;
 import java.util.*;
 
-public class ArvoreBMaisBibliotecaJogo {
-    private NoB raiz;
+public class ArvoreBMaisClienteBiblioteca {
+    private NoBCliente raiz;
     private int ordem;
-    private NoFolhaBiblioteca primeiraFolha;
+    private NoFolhaClienteBib primeiraFolha;
     
-    public ArvoreBMaisBibliotecaJogo(int ordem) {
+    public ArvoreBMaisClienteBiblioteca(int ordem) {
         this.ordem = ordem;
-        this.raiz = new NoFolhaBiblioteca();
-        this.primeiraFolha = (NoFolhaBiblioteca) raiz;
+        this.raiz = new NoFolhaClienteBib();
+        this.primeiraFolha = (NoFolhaClienteBib) raiz;
     }
     
-    public void inserirItem(BibliotecaJogo item) {
-        inserir(item.getBibliotecaId(), item);
+    // Inserir biblioteca indexada por clienteId
+    public void inserirBiblioteca(Biblioteca biblioteca) {
+        inserir(biblioteca.getClienteId(), biblioteca);
     }
     
-    private void inserir(int bibliotecaId, BibliotecaJogo item) {
-        NoFolhaBiblioteca folha = encontrarFolha(bibliotecaId);
-        folha.inserir(bibliotecaId, item, ordem);
+    private void inserir(int clienteId, Biblioteca biblioteca) {
+        NoFolhaClienteBib folha = encontrarFolha(clienteId);
+        folha.inserir(clienteId, biblioteca, ordem);
         
         if (folha.isFull(ordem)) {
             dividirFolha(folha);
         }
     }
     
-    // BUSCA PRINCIPAL: todos os jogos de uma biblioteca
-    public List<BibliotecaJogo> buscarJogosDaBiblioteca(int bibliotecaId) {
-        NoFolhaBiblioteca folha = encontrarFolha(bibliotecaId);
-        return folha.buscarJogosPorBiblioteca(bibliotecaId);
+    // BUSCA PRINCIPAL: biblioteca de um cliente específico
+    public Biblioteca buscarBibliotecaDoCliente(int clienteId) {
+        NoFolhaClienteBib folha = encontrarFolha(clienteId);
+        List<Biblioteca> bibliotecas = folha.buscarBibliotecasPorCliente(clienteId);
+        
+        // Como é 1:1, retorna a primeira (deveria ser única)
+        return bibliotecas.isEmpty() ? null : bibliotecas.get(0);
     }
     
-    // Buscar por faixa de bibliotecas (ordenação)
-    public List<BibliotecaJogo> buscarPorFaixaBiblioteca(int bibliotecaIdMin, int bibliotecaIdMax) {
-        List<BibliotecaJogo> resultado = new ArrayList<>();
-        NoFolhaBiblioteca folhaAtual = encontrarFolha(bibliotecaIdMin);
+    // Buscar bibliotecas por faixa de clientes (para relatórios)
+    public List<Biblioteca> buscarPorFaixaCliente(int clienteIdMin, int clienteIdMax) {
+        List<Biblioteca> resultado = new ArrayList<Biblioteca>();
+        NoFolhaClienteBib folhaAtual = encontrarFolha(clienteIdMin);
         
         while (folhaAtual != null) {
             for (int i = 0; i < folhaAtual.chaves.size(); i++) {
-                int bibliotecaId = folhaAtual.chaves.get(i);
+                int clienteId = folhaAtual.chaves.get(i);
                 
-                if (bibliotecaId >= bibliotecaIdMin && bibliotecaId <= bibliotecaIdMax) {
+                if (clienteId >= clienteIdMin && clienteId <= clienteIdMax) {
                     resultado.addAll(folhaAtual.getValores().get(i));
-                } else if (bibliotecaId > bibliotecaIdMax) {
+                } else if (clienteId > clienteIdMax) {
                     return resultado;
                 }
             }
@@ -54,14 +58,14 @@ public class ArvoreBMaisBibliotecaJogo {
         return resultado;
     }
     
-    // Listar todas as bibliotecas ordenadas por ID
-    public List<BibliotecaJogo> listarTodosOrdenadosPorBiblioteca() {
-        List<BibliotecaJogo> resultado = new ArrayList<>();
-        NoFolhaBiblioteca folhaAtual = primeiraFolha;
+    // Listar todas as bibliotecas ordenadas por clienteId
+    public List<Biblioteca> listarTodasOrdenadosPorCliente() {
+        List<Biblioteca> resultado = new ArrayList<Biblioteca>();
+        NoFolhaClienteBib folhaAtual = primeiraFolha;
         
         while (folhaAtual != null) {
-            for (List<BibliotecaJogo> itensComMesmaBiblioteca : folhaAtual.getValores()) {
-                resultado.addAll(itensComMesmaBiblioteca);
+            for (List<Biblioteca> bibliotecasComMesmoCliente : folhaAtual.getValores()) {
+                resultado.addAll(bibliotecasComMesmoCliente);
             }
             folhaAtual = folhaAtual.getProximo();
         }
@@ -69,22 +73,24 @@ public class ArvoreBMaisBibliotecaJogo {
         return resultado;
     }
     
-    public boolean removerItem(int bibliotecaId, int jogoId) {
-        NoFolhaBiblioteca folha = encontrarFolha(bibliotecaId);
-        List<BibliotecaJogo> itens = folha.buscarJogosPorBiblioteca(bibliotecaId);
+    // Remover biblioteca
+    public boolean removerBiblioteca(int clienteId, int bibliotecaId) {
+        NoFolhaClienteBib folha = encontrarFolha(clienteId);
+        List<Biblioteca> bibliotecas = folha.buscarBibliotecasPorCliente(clienteId);
         
         boolean removido = false;
-        for (int i = 0; i < itens.size(); i++) {
-            if (itens.get(i).getJogoId() == jogoId) {
-                itens.remove(i);
+        for (int i = 0; i < bibliotecas.size(); i++) {
+            if (bibliotecas.get(i).getId() == bibliotecaId) {
+                bibliotecas.remove(i);
                 removido = true;
                 break;
             }
         }
         
-        if (removido && itens.isEmpty()) {
-            int pos = folha.encontrarPosicao(bibliotecaId);
-            if (pos < folha.chaves.size() && folha.chaves.get(pos) == bibliotecaId) {
+        // Se lista ficou vazia, remove o clienteId
+        if (removido && bibliotecas.isEmpty()) {
+            int pos = folha.encontrarPosicao(clienteId);
+            if (pos < folha.chaves.size() && folha.chaves.get(pos) == clienteId) {
                 folha.chaves.remove(pos);
                 folha.getValores().remove(pos);
             }
@@ -93,104 +99,109 @@ public class ArvoreBMaisBibliotecaJogo {
         return removido;
     }
     
-    private NoFolhaBiblioteca encontrarFolha(int bibliotecaId) {
-        NoB atual = raiz;
+    // Encontrar folha que deveria conter o clienteId
+    private NoFolhaClienteBib encontrarFolha(int clienteId) {
+        NoBCliente atual = raiz;
         
         while (!atual.ehFolha) {
-            NoInternoBiblioteca noInterno = (NoInternoBiblioteca) atual;
+            NoInternoClienteBib noInterno = (NoInternoClienteBib) atual;
             int pos = 0;
             
-            while (pos < atual.chaves.size() && bibliotecaId >= atual.chaves.get(pos)) {
+            while (pos < atual.chaves.size() && clienteId >= atual.chaves.get(pos)) {
                 pos++;
             }
             
             atual = noInterno.getFilhos().get(pos);
         }
         
-        return (NoFolhaBiblioteca) atual;
+        return (NoFolhaClienteBib) atual;
     }
     
-    private void dividirFolha(NoFolhaBiblioteca folha) {
-        // Implementação similar à ArvoreBMaisPreco
-        // Adaptada para trabalhar com bibliotecaId
-    }
-}
-
-// Classes auxiliares para nós da árvore B+
-class NoInternoBiblioteca extends NoB {
-    private List<NoB> filhos;
-    
-    public NoInternoBiblioteca() {
-        super(false);
-        this.filhos = new ArrayList<>();
-    }
-    
-    @Override
-    public boolean isFull(int ordem) {
-        return chaves.size() >= ordem - 1;
-    }
-    
-    @Override
-    public void inserir(double chave, Object item, int ordem) {
-        // Implementação para nó interno
-    }
-    
-    public List<NoB> getFilhos() { return filhos; }
-}
-
-class NoFolhaBiblioteca extends NoB {
-    private List<List<BibliotecaJogo>> valores;
-    private NoFolhaBiblioteca proximo;
-    private NoFolhaBiblioteca anterior;
-    
-    public NoFolhaBiblioteca() {
-        super(true);
-        this.valores = new ArrayList<>();
-        this.proximo = null;
-        this.anterior = null;
-    }
-    
-    @Override
-    public boolean isFull(int ordem) {
-        return chaves.size() >= ordem;
-    }
-    
-    @Override
-    public void inserir(double bibliotecaId, Object item, int ordem) {
-        int id = (int) bibliotecaId;
-        BibliotecaJogo bibItem = (BibliotecaJogo) item;
+    // Dividir folha quando fica cheia
+    private void dividirFolha(NoFolhaClienteBib folha) {
+        NoFolhaClienteBib novaFolha = new NoFolhaClienteBib();
+        int meio = ordem / 2;
         
-        int pos = encontrarPosicao(id);
+        // Move metade das chaves para nova folha
+        while (folha.chaves.size() > meio) {
+            int ultimoIndice = folha.chaves.size() - 1;
+            novaFolha.chaves.add(0, folha.chaves.remove(ultimoIndice));
+            novaFolha.getValores().add(0, folha.getValores().remove(ultimoIndice));
+        }
         
-        if (pos < chaves.size() && chaves.get(pos).intValue() == id) {
-            valores.get(pos).add(bibItem);
+        // Atualiza links entre folhas
+        novaFolha.setProximo(folha.getProximo());
+        novaFolha.setAnterior(folha);
+        
+        if (folha.getProximo() != null) {
+            folha.getProximo().setAnterior(novaFolha);
+        }
+        folha.setProximo(novaFolha);
+        
+        // Promove chave para pai
+        int chavePromovida = novaFolha.chaves.get(0);
+        
+        if (folha.pai == null) {
+            // Criar nova raiz
+            NoInternoClienteBib novaRaiz = new NoInternoClienteBib();
+            novaRaiz.chaves.add(chavePromovida);
+            novaRaiz.getFilhos().add(folha);
+            novaRaiz.getFilhos().add(novaFolha);
+            
+            folha.pai = novaRaiz;
+            novaFolha.pai = novaRaiz;
+            raiz = novaRaiz;
         } else {
-            chaves.add(pos, (double) id);
-            List<BibliotecaJogo> listaItens = new ArrayList<>();
-            listaItens.add(bibItem);
-            valores.add(pos, listaItens);
+            NoInternoClienteBib pai = (NoInternoClienteBib) folha.pai;
+            pai.inserirChave(chavePromovida, novaFolha);
         }
     }
     
-    public int encontrarPosicao(int bibliotecaId) {
-        int pos = 0;
-        while (pos < chaves.size() && bibliotecaId > chaves.get(pos)) {
-            pos++;
+    // Método para debug
+    public void exibirEstrutura() {
+        System.out.println("\n=== Estrutura da Árvore B+ (Cliente-Biblioteca) ===");
+        NoFolhaClienteBib folhaAtual = primeiraFolha;
+        int folhaNum = 1;
+        
+        while (folhaAtual != null) {
+            System.out.println("Folha " + folhaNum + ":");
+            for (int i = 0; i < folhaAtual.chaves.size(); i++) {
+                int clienteId = folhaAtual.chaves.get(i);
+                int qtdBibliotecas = folhaAtual.getValores().get(i).size();
+                System.out.println("  Cliente " + clienteId + " -> " + qtdBibliotecas + " biblioteca(s)");
+            }
+            folhaAtual = folhaAtual.getProximo();
+            folhaNum++;
         }
-        return pos;
+        System.out.println("================================================\n");
     }
-    
-    public List<BibliotecaJogo> buscarJogosPorBiblioteca(int bibliotecaId) {
-        int pos = encontrarPosicao(bibliotecaId);
-        if (pos < chaves.size() && chaves.get(pos).intValue() == bibliotecaId) {
-            return new ArrayList<>(valores.get(pos));
-        }
-        return new ArrayList<>();
-    }
-    
-    public List<List<BibliotecaJogo>> getValores() { return valores; }
-    public NoFolhaBiblioteca getProximo() { return proximo; }
-    public NoFolhaBiblioteca getAnterior() { return anterior; }
-    public void setProximo(NoFolhaBiblioteca proximo) { this.proximo = proximo; }
-    public void setAnterior(NoFolhaBiblioteca anterior) { this.anterior = anterior; }
 }
+
+// ============ CLASSES DOS NÓS ============
+
+abstract class NoBCliente {
+    protected List<Integer> chaves; // clienteId
+    protected boolean ehFolha;
+    protected NoBCliente pai;
+    
+    public NoBCliente(boolean ehFolha) {
+        this.chaves = new ArrayList<Integer>();
+        this.ehFolha = ehFolha;
+        this.pai = null;
+    }
+    
+    public abstract boolean isFull(int ordem);
+    public abstract void inserir(int clienteId, Biblioteca biblioteca, int ordem);
+}
+
+class NoInternoClienteBib extends NoBCliente {
+    private List<NoBCliente> filhos;
+    
+    public NoInternoClienteBib() {
+        super(false);
+        this.filhos = new ArrayList<NoBCliente>();
+    }
+    
+    @Override
+    public boolean isFull(int ordem) {
+        return chaves.size()
