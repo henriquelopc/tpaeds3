@@ -7,28 +7,28 @@ import java.util.ArrayList;
 
 public class BibliotecaDAO {
     private Arquivo<Biblioteca> arq;
-    private ArvoreBMaisClienteBiblioteca indiceCliente; // NOVA LINHA
+    private ArvoreBMaisClienteBiblioteca indiceCliente; // ÁRVORE B+ APENAS
     
     public BibliotecaDAO() throws Exception {
         arq = new Arquivo<>("bibliotecas", Biblioteca.class.getConstructor());
-        indiceCliente = new ArvoreBMaisClienteBiblioteca(4); // NOVA LINHA
-        carregarIndiceCliente(); // NOVA LINHA
+        indiceCliente = new ArvoreBMaisClienteBiblioteca(4); // ÁRVORE B+ ordem 4
+        carregarIndiceCliente();
     }
     
-    // NOVO MÉTODO - Carregar bibliotecas existentes no índice
+    // Carregar bibliotecas existentes na Árvore B+
     private void carregarIndiceCliente() {
         try {
             List<Biblioteca> bibliotecas = listarTodas();
             for (Biblioteca biblioteca : bibliotecas) {
                 indiceCliente.inserirBiblioteca(biblioteca);
             }
-            System.out.println("Indice cliente-biblioteca carregado com " + bibliotecas.size() + " bibliotecas");
+            System.out.println("Indice B+ cliente-biblioteca carregado com " + bibliotecas.size() + " bibliotecas");
         } catch (Exception e) {
             System.err.println("Erro ao carregar indice: " + e.getMessage());
         }
     }
     
-    // NOVO MÉTODO AUXILIAR - Listar todas as bibliotecas
+    // Método auxiliar para listar todas as bibliotecas
     private List<Biblioteca> listarTodas() throws Exception {
         List<Biblioteca> bibliotecas = new ArrayList<Biblioteca>();
         
@@ -54,7 +54,8 @@ public class BibliotecaDAO {
         return bibliotecas;
     }
     
-    // MÉTODOS ORIGINAIS (mantidos iguais)
+    // ============ MÉTODOS ORIGINAIS (mantidos iguais) ============
+    
     public Biblioteca buscar(int id) throws Exception {
         return arq.read(id);
     }
@@ -62,13 +63,13 @@ public class BibliotecaDAO {
     public boolean incluir(Biblioteca b) throws Exception {
         boolean sucesso = arq.create(b) > 0;
         if (sucesso) {
-            indiceCliente.inserirBiblioteca(b); // NOVA LINHA
+            indiceCliente.inserirBiblioteca(b); // Atualiza Árvore B+
         }
         return sucesso;
     }
     
     public boolean alterar(Biblioteca b) throws Exception {
-        // NOVA LÓGICA - Remove versão antiga do índice
+        // Remove versão antiga da Árvore B+
         Biblioteca bibliotecaAntiga = buscar(b.getId());
         if (bibliotecaAntiga != null) {
             indiceCliente.removerBiblioteca(bibliotecaAntiga.getClienteId(), bibliotecaAntiga.getId());
@@ -76,7 +77,7 @@ public class BibliotecaDAO {
         
         boolean sucesso = arq.update(b);
         if (sucesso) {
-            indiceCliente.inserirBiblioteca(b); // Adiciona versão atualizada
+            indiceCliente.inserirBiblioteca(b); // Adiciona versão nova na Árvore B+
         }
         return sucesso;
     }
@@ -90,7 +91,7 @@ public class BibliotecaDAO {
                 return false;
             }
         }
-        return incluir(b); // Chama incluir() que já atualiza o índice
+        return incluir(b); // Usa incluir() que já atualiza a Árvore B+
     }
     
     public boolean alterarComValidacao(Biblioteca b) throws Exception {
@@ -102,11 +103,11 @@ public class BibliotecaDAO {
                 return false;
             }
         }
-        return alterar(b); // Chama alterar() que já atualiza o índice
+        return alterar(b); // Usa alterar() que já atualiza a Árvore B+
     }
     
     public boolean excluir(int id) throws Exception {
-        // NOVA LÓGICA - Remove do índice também
+        // Remove da Árvore B+ também
         Biblioteca biblioteca = buscar(id);
         boolean sucesso = arq.delete(id);
         if (sucesso && biblioteca != null) {
@@ -115,14 +116,14 @@ public class BibliotecaDAO {
         return sucesso;
     }
     
-    // ============ NOVOS MÉTODOS - Busca por relacionamento usando Árvore B+ ============
+    // ============ NOVOS MÉTODOS - Busca usando Árvore B+ ============
     
-    // Buscar biblioteca de um cliente específico (relacionamento 1:1)
+    // PRINCIPAL: buscar biblioteca de um cliente específico
     public Biblioteca buscarBibliotecaDoCliente(int clienteId) {
         return indiceCliente.buscarBibliotecaDoCliente(clienteId);
     }
     
-    // Buscar bibliotecas por faixa de clientes (para relatórios)
+    // Buscar bibliotecas de uma faixa de clientes (ordenado)
     public List<Biblioteca> buscarPorFaixaCliente(int clienteIdMin, int clienteIdMax) {
         return indiceCliente.buscarPorFaixaCliente(clienteIdMin, clienteIdMax);
     }
@@ -137,24 +138,7 @@ public class BibliotecaDAO {
         return buscarBibliotecaDoCliente(clienteId) != null;
     }
     
-    // Estatísticas usando o índice
-    public void exibirEstatisticasCliente() {
-        System.out.println("\n=== ESTATISTICAS CLIENTE-BIBLIOTECA ===");
-        
-        List<Biblioteca> todas = listarTodasOrdenadosPorCliente();
-        System.out.println("Total de bibliotecas: " + todas.size());
-        
-        // Contar clientes únicos
-        Set<Integer> clientesUnicos = new HashSet<>();
-        for (Biblioteca bib : todas) {
-            clientesUnicos.add(bib.getClienteId());
-        }
-        System.out.println("Clientes com biblioteca: " + clientesUnicos.size());
-        
-        System.out.println("========================================\n");
-    }
-    
-    // Método para debug da árvore
+    // Exibir estrutura da Árvore B+ (para debug)
     public void exibirEstruturaIndice() {
         indiceCliente.exibirEstrutura();
     }
