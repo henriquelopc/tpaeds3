@@ -1,20 +1,21 @@
 package dao;
 import model.Biblioteca;
-import model.BibliotecaJogo;
+import dao.ClienteDAO;
 import model.Cliente;
 import java.util.List;
 import java.util.ArrayList;
 
 public class BibliotecaDAO {
     private Arquivo<Biblioteca> arq;
-    private HashExtensivelClienteBiblioteca indiceCliente; // HASH para Cliente → Biblioteca
+    private ArvoreBMaisClienteBiblioteca indiceCliente; // NOVA LINHA
     
     public BibliotecaDAO() throws Exception {
         arq = new Arquivo<>("bibliotecas", Biblioteca.class.getConstructor());
-        indiceCliente = new HashExtensivelClienteBiblioteca(4);
-        carregarIndiceCliente();
+        indiceCliente = new ArvoreBMaisClienteBiblioteca(4); // NOVA LINHA
+        carregarIndiceCliente(); // NOVA LINHA
     }
     
+    // NOVO MÉTODO - Carregar bibliotecas existentes no índice
     private void carregarIndiceCliente() {
         try {
             List<Biblioteca> bibliotecas = listarTodas();
@@ -27,69 +28,9 @@ public class BibliotecaDAO {
         }
     }
     
-    // MÉTODOS ORIGINAIS
-    public Biblioteca buscar(int id) throws Exception {
-        return arq.read(id);
-    }
-    
-    public boolean incluir(Biblioteca b) throws Exception {
-        boolean sucesso = arq.create(b) > 0;
-        if (sucesso) {
-            indiceCliente.inserirBiblioteca(b);
-        }
-        return sucesso;
-    }
-    
-    public boolean alterar(Biblioteca b) throws Exception {
-        Biblioteca bibliotecaAntiga = buscar(b.getId());
-        if (bibliotecaAntiga != null) {
-            indiceCliente.removerBiblioteca(bibliotecaAntiga.getClienteId());
-        }
-        
-        boolean sucesso = arq.update(b);
-        if (sucesso) {
-            indiceCliente.inserirBiblioteca(b);
-        }
-        return sucesso;
-    }
-    
-    public boolean excluir(int id) throws Exception {
-        Biblioteca biblioteca = buscar(id);
-        boolean sucesso = arq.delete(id);
-        if (sucesso && biblioteca != null) {
-            indiceCliente.removerBiblioteca(biblioteca.getClienteId());
-        }
-        return sucesso;
-    }
-    
-    // NOVOS MÉTODOS - Busca por relacionamento
-    public Biblioteca buscarBibliotecaDoCliente(int clienteId) {
-        return indiceCliente.buscarBibliotecaDoCliente(clienteId);
-    }
-    
-    public List<Biblioteca> listarTodasBibliotecas() {
-        return indiceCliente.listarTodasBibliotecas();
-    }
-    
-    // Validação com cliente
-    public boolean incluirComValidacao(Biblioteca b) throws Exception {
-        if (b.getClienteId() > 0) {
-            ClienteDAO cd = new ClienteDAO();
-            Cliente cli = cd.buscarCliente(b.getClienteId());
-            
-            if (cli != null) {
-                return incluir(b);
-            } else {
-                System.err.println("Cliente não encontrado para a biblioteca!");
-                return false;
-            }
-        }
-        return incluir(b);
-    }
-    
-    // Método auxiliar
+    // NOVO MÉTODO AUXILIAR - Listar todas as bibliotecas
     private List<Biblioteca> listarTodas() throws Exception {
-        List<Biblioteca> bibliotecas = new ArrayList<>();
+        List<Biblioteca> bibliotecas = new ArrayList<Biblioteca>();
         
         int id = 1;
         int falhasConsecutivas = 0;
@@ -111,5 +52,110 @@ public class BibliotecaDAO {
         }
         
         return bibliotecas;
+    }
+    
+    // MÉTODOS ORIGINAIS (mantidos iguais)
+    public Biblioteca buscar(int id) throws Exception {
+        return arq.read(id);
+    }
+    
+    public boolean incluir(Biblioteca b) throws Exception {
+        boolean sucesso = arq.create(b) > 0;
+        if (sucesso) {
+            indiceCliente.inserirBiblioteca(b); // NOVA LINHA
+        }
+        return sucesso;
+    }
+    
+    public boolean alterar(Biblioteca b) throws Exception {
+        // NOVA LÓGICA - Remove versão antiga do índice
+        Biblioteca bibliotecaAntiga = buscar(b.getId());
+        if (bibliotecaAntiga != null) {
+            indiceCliente.removerBiblioteca(bibliotecaAntiga.getClienteId(), bibliotecaAntiga.getId());
+        }
+        
+        boolean sucesso = arq.update(b);
+        if (sucesso) {
+            indiceCliente.inserirBiblioteca(b); // Adiciona versão atualizada
+        }
+        return sucesso;
+    }
+    
+    public boolean incluirComValidacao(Biblioteca b) throws Exception {
+        if (b.getClienteId() > 0) {
+            ClienteDAO cd = new ClienteDAO();
+            Cliente cli = cd.buscarCliente(b.getClienteId());
+            if (cli == null) {
+                System.out.println("Cliente informado não existe: " + b.getClienteId());
+                return false;
+            }
+        }
+        return incluir(b); // Chama incluir() que já atualiza o índice
+    }
+    
+    public boolean alterarComValidacao(Biblioteca b) throws Exception {
+        if (b.getClienteId() > 0) {
+            ClienteDAO cd = new ClienteDAO();
+            Cliente cli = cd.buscarCliente(b.getClienteId());
+            if (cli == null) {
+                System.out.println("Cliente informado não existe: " + b.getClienteId());
+                return false;
+            }
+        }
+        return alterar(b); // Chama alterar() que já atualiza o índice
+    }
+    
+    public boolean excluir(int id) throws Exception {
+        // NOVA LÓGICA - Remove do índice também
+        Biblioteca biblioteca = buscar(id);
+        boolean sucesso = arq.delete(id);
+        if (sucesso && biblioteca != null) {
+            indiceCliente.removerBiblioteca(biblioteca.getClienteId(), biblioteca.getId());
+        }
+        return sucesso;
+    }
+    
+    // ============ NOVOS MÉTODOS - Busca por relacionamento usando Árvore B+ ============
+    
+    // Buscar biblioteca de um cliente específico (relacionamento 1:1)
+    public Biblioteca buscarBibliotecaDoCliente(int clienteId) {
+        return indiceCliente.buscarBibliotecaDoCliente(clienteId);
+    }
+    
+    // Buscar bibliotecas por faixa de clientes (para relatórios)
+    public List<Biblioteca> buscarPorFaixaCliente(int clienteIdMin, int clienteIdMax) {
+        return indiceCliente.buscarPorFaixaCliente(clienteIdMin, clienteIdMax);
+    }
+    
+    // Listar todas as bibliotecas ordenadas por clienteId
+    public List<Biblioteca> listarTodasOrdenadosPorCliente() {
+        return indiceCliente.listarTodasOrdenadosPorCliente();
+    }
+    
+    // Verificar se cliente já possui biblioteca
+    public boolean clienteJaPossuiBiblioteca(int clienteId) {
+        return buscarBibliotecaDoCliente(clienteId) != null;
+    }
+    
+    // Estatísticas usando o índice
+    public void exibirEstatisticasCliente() {
+        System.out.println("\n=== ESTATISTICAS CLIENTE-BIBLIOTECA ===");
+        
+        List<Biblioteca> todas = listarTodasOrdenadosPorCliente();
+        System.out.println("Total de bibliotecas: " + todas.size());
+        
+        // Contar clientes únicos
+        Set<Integer> clientesUnicos = new HashSet<>();
+        for (Biblioteca bib : todas) {
+            clientesUnicos.add(bib.getClienteId());
+        }
+        System.out.println("Clientes com biblioteca: " + clientesUnicos.size());
+        
+        System.out.println("========================================\n");
+    }
+    
+    // Método para debug da árvore
+    public void exibirEstruturaIndice() {
+        indiceCliente.exibirEstrutura();
     }
 }
