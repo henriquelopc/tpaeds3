@@ -204,4 +204,86 @@ class NoInternoClienteBib extends NoBCliente {
     
     @Override
     public boolean isFull(int ordem) {
-        return chaves.size()
+        return chaves.size() >= ordem - 1;
+    }
+    
+    @Override
+    public void inserir(int clienteId, Biblioteca biblioteca, int ordem) {
+        int pos = 0;
+        while (pos < chaves.size() && clienteId > chaves.get(pos)) {
+            pos++;
+        }
+        filhos.get(pos).inserir(clienteId, biblioteca, ordem);
+    }
+    
+    public void inserirChave(int chave, NoBCliente novoFilho) {
+        int pos = 0;
+        while (pos < chaves.size() && chave > chaves.get(pos)) {
+            pos++;
+        }
+        chaves.add(pos, chave);
+        filhos.add(pos + 1, novoFilho);
+        novoFilho.pai = this;
+    }
+    
+    public List<NoBCliente> getFilhos() { 
+        return filhos; 
+    }
+}
+
+class NoFolhaClienteBib extends NoBCliente {
+    private List<List<Biblioteca>> valores;
+    private NoFolhaClienteBib proximo;
+    private NoFolhaClienteBib anterior;
+    
+    public NoFolhaClienteBib() {
+        super(true);
+        this.valores = new ArrayList<List<Biblioteca>>();
+        this.proximo = null;
+        this.anterior = null;
+    }
+    
+    @Override
+    public boolean isFull(int ordem) {
+        return chaves.size() >= ordem;
+    }
+    
+    @Override
+    public void inserir(int clienteId, Biblioteca biblioteca, int ordem) {
+        int pos = encontrarPosicao(clienteId);
+        
+        if (pos < chaves.size() && chaves.get(pos) == clienteId) {
+            // Cliente já existe, adiciona biblioteca
+            valores.get(pos).add(biblioteca);
+        } else {
+            // Novo cliente
+            chaves.add(pos, clienteId);
+            List<Biblioteca> listaBibliotecas = new ArrayList<Biblioteca>();
+            listaBibliotecas.add(biblioteca);
+            valores.add(pos, listaBibliotecas);
+        }
+    }
+    
+    public int encontrarPosicao(int clienteId) {
+        int pos = 0;
+        while (pos < chaves.size() && clienteId > chaves.get(pos)) {
+            pos++;
+        }
+        return pos;
+    }
+    
+    public List<Biblioteca> buscarBibliotecasPorCliente(int clienteId) {
+        int pos = encontrarPosicao(clienteId);
+        if (pos < chaves.size() && chaves.get(pos) == clienteId) {
+            return new ArrayList<Biblioteca>(valores.get(pos));
+        }
+        return new ArrayList<Biblioteca>();
+    }
+    
+    // Getters e Setters
+    public List<List<Biblioteca>> getValores() { return valores; }
+    public NoFolhaClienteBib getProximo() { return proximo; }
+    public NoFolhaClienteBib getAnterior() { return anterior; }
+    public void setProximo(NoFolhaClienteBib proximo) { this.proximo = proximo; }
+    public void setAnterior(NoFolhaClienteBib anterior) { this.anterior = anterior; }
+}
