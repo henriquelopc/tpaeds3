@@ -1,0 +1,27 @@
+d) Além das PKs, quais outras chaves foram utilizadas nesta etapa?
+Chaves Primárias (PKs):
+Jogo.id
+Cliente.id
+Biblioteca.id
+CompraJogo.id
+BibliotecaJogo.id
+Outras chaves utilizadas:
+Jogo.preco - Chave de busca para encontrar jogos por faixa de preço
+Biblioteca.clienteId - Chave estrangeira (FK) usada como chave de busca para relacionamento 1:N
+BibliotecaJogo.bibliotecaId - FK usada como chave de busca para relacionamento 1:N
+BibliotecaJogo.jogoId - FK usada como chave de busca para relacionamento 1:N
+
+e) Quais tipos de estruturas B+Tree foram utilizadas para cada chave de pesquisa?
+Árvore B+ implementadas:
+ArvoreBMaisPreco (para Jogo.preco):
+Tipo: Árvore B+ com chaves double (preços)
+Uso: Busca jogos por preço exato e faixa de preços
+Exemplo: buscarPorFaixaPreco(30.0, 80.0)
+ArvoreBMaisClienteBiblioteca (para Biblioteca.clienteId):
+Tipo: Árvore B+ com chaves int (IDs de cliente)
+Uso: Busca biblioteca por cliente (relacionamento 1:N)
+Exemplo: buscarBibliotecaDoCliente(1)
+ArvoreBMaisBibliotecaJogo (para BibliotecaJogo.bibliotecaId):
+Tipo: Árvore B+ com chaves int (IDs de biblioteca)
+Uso: Busca jogos de uma biblioteca (relacionamento 1:N)
+Exemplo: buscarJogosDaBiblioteca(1)
